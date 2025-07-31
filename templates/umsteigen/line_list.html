@@ -1,0 +1,22 @@
+{% extends "umsteigen/base.html" %}
+
+{% block title %}Umsteigen bei der Berliner BVG -- Liste der Linien{% endblock %}
+{% block titleh1 %}Liste der Linien{% endblock %}
+
+{% block content %}
+
+In welchen Waggon muss ich bei der BVG Berlin einsteigen um am besten umzusteigen?! Bitte eine Linie auswählen:
+
+    <ul class="list-group">
+    {% for line in line_list %}
+        <li class="list-group-item"><a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span>{{ line.start.name }}
+	{% if line.end is not None %}
+	    &harr; {{ line.end.name }}
+	{% endif %}
+        </a></li>
+    {% empty %}
+        <li class="list-group-item">Keine Linien vorhanden.</li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}

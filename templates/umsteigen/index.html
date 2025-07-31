@@ -1,0 +1,24 @@
+{% extends "umsteigen/base.html" %}
+
+{% block title %}Umsteigen bei der Berliner BVG{% endblock %}
+{% block titleh1 %}Umsteigen bei der Berliner BVG{% endblock %}
+
+{% block content %}
+<p>
+In welchen Waggon muss ich bei der BVG Berlin einsteigen um am besten umzusteigen?! <br>
+Bislang sind <a href="{% url 'line_list' %}">{{ line_counter }} Linien</a> eingetragen mit <a href="{% url 'station_list' %}">{{ station_counter }} Umsteigestationen</a> (davon {{ station_complete_counter }} vollständig) und {{ change_counter }} Hinweisen zum Umsteigen.
+</p>
+<p>
+Letzte Aktualisierung am {{ last_modified.updated_at|date:'Y-m-d' }} um {{ last_modified.updated_at|date:'H:i' }} bei
+<a href="{% url 'station_detail_name' last_modified.at.url_name %}">{{ last_modified.at.name }}</a>
+{% for line in last_modified.at.lines.all %}<a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span></a>{% endfor %}
+</p>
+<p>
+Top Ten Beitragende: 
+<ul>
+{% for c in contributions %}
+<li style="list-style: none">&#x1F3C6; {{ c.name }} mit {{ c.dcount }} Beiträgen
+{% endfor %}
+</ul>
+</p>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "umsteigen/base.html" %}
+
+{% block title %}Umsteigen bei {{ line }} der Berliner BVG{% endblock %}
+{% block titleh1 %}Umsteigen {{ line }} {% endblock %}
+{% block metadescription %}In welchen Waggon muss ich bei der Berliner BVG einsteigen um auf der {{ line }} am besten umzusteigen?!{% endblock %}
+
+
+{% block content %}
+
+<a class="btn btn-default" href="{{ line.bvg_details }}" target="_blank" role="button">Details zur {{ line }} bei der BVG <img src="/static/umsteigen/extlink.png" alt="externer Link" border="0"></a>
+
+<p>
+In welchen Waggon muss ich bei der BVG Berlin einsteigen um auf der <a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line }}</span></a> 
+{{ line.start.name }}
+{% if line.end is not None %}
+    &harr; {{ line.end.name }}
+{% endif %}
+am besten umzusteigen?! Bitte einen Umsteigebahnhof auswählen:
+</p>
+
+{% if line.sequence_available %}
+	<!-- select style -->
+	<ul class="nav nav-tabs">
+	  <li role="presentation" class="{{ tab_alpha }}"><a href="{% url 'line_detail' line.id %}">Alphabetisch</a></li>
+	  <li role="presentation" class="{{ tab_sequence }}"><a href="{% url 'line_detail' line.id 'sequence' %}">Reihenfolge</a></li>
+	</ul>
+{% endif %}
+
+    <ul class="list-group">
+    {% for station in line_station_list %}
+        <li class="list-group-item">
+	    {% if sequence and forloop.first %}
+	      <span class="{{ line.css_prefix }}_seq_first">&#9679;</span>
+            {% endif %}
+            {% if sequence and not forloop.first and not forloop.last %}
+              <span class="{{ line.css_prefix }}_seq">&#9675;</span>
+            {% endif %}
+	    {% if sequence and forloop.last %}
+	      <span class="{{ line.css_prefix }}_seq_last">&#9679;</span>
+            {% endif %}
+	    {% if station.change_station %}
+		{% if station.url_name != None %}
+                  <a href="{% url 'station_detail_name' station.url_name %}">{{ station.nice_name|safe }}</a>
+                {% else %}
+                  <a href="{% url 'station_detail' station.id %}">{{ station.nice_name|safe }}</a>
+                {% endif %}
+	    {% else %}
+		{{ station.nice_name|safe }}
+            {% endif %}
+	    {% if station.complete %}
+                &#10004;
+            {% endif %}
+	    {% if station.change_station %}
+                <span class="badge">{{ station.count }}</span>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li class="list-group-item">Keine Stationen vorhanden.</li>
+    {% endfor %}
+    </ul>
+<p>
+    <span class="badge">x</span> = Anzahl der jeweiligen Umsteigeinformationen<br>
+    &nbsp; &#10004; = Station vollständig
+</p>
+{% endblock content %}

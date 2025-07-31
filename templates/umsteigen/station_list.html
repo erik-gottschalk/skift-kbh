@@ -1,0 +1,36 @@
+{% extends "umsteigen/base.html" %}
+
+{% block title %}Umsteigen bei der Berliner BVG -- Liste der Stationen {% endblock %}
+{% block titleh1 %}Liste der Stationen{% endblock %}
+
+{% block content %}
+
+In welchen Waggon muss ich bei der BVG Berlin einsteigen um am besten umzusteigen?! Bitte eine Station auswählen:
+    <ul class="list-group">
+    {% for station in station_list %}
+        <li class="list-group-item">
+	    {% if station.change_station %}
+	      {% if station.url_name != None %}
+	        <a href="{% url 'station_detail_name' station.url_name %}">{{ station.nice_name|safe }}</a>
+	      {% else %}
+	        <a href="{% url 'station_detail' station.id %}">{{ station.nice_name|safe }}</a>
+              {% endif %}
+	    {% else %}
+	      {{ station.nice_name|safe }}
+            {% endif %}
+            {% if station.complete %}
+		&#10004;
+            {% endif %}
+	    {% if station.change_station %}
+              <span class="badge">{{ station.count }}</span>
+            {% endif %}
+            </li>
+    {% empty %}
+    	<li class="list-group-item">Keine Stationen vorhanden.</li>
+    {% endfor %}
+    </ul>
+<p>
+    <span class="badge">x</span> = Anzahl der jeweiligen Umsteigeinformationen<br>
+    &nbsp; &#10004; = Station vollständig
+</p>
+{% endblock content %}

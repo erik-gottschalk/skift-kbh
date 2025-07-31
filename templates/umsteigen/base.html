@@ -1,0 +1,141 @@
+<!DOCTYPE HTML >
+
+<html>
+
+<head>
+    <title>{% block title %}Umsteigen in Berlin{% endblock title %}</title>
+
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap-select.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/static/umsteigen/favicon.ico">
+
+	<!-- meta stuff -->
+    <meta name="google-site-verification" content="5nMQyLauqsNltnNVIriduRZyORFE5b9jiKDIvA6W7yU" />
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="language" content="DE">
+	<meta name="robots" content="{% block metarobots %}all{% endblock metarobots %}">
+	<meta name="author" content="Paul Führing">
+    <meta name="description" content="{% block metadescription %}In welchen Waggon muss ich bei der Berliner BVG einsteigen um am besten umzusteigen?!{% endblock metadescription %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<!-- end meta -->
+    
+	<script src="/static/bootstrap/jquery.min.js"></script>
+	<script src="/static/bootstrap/bootstrap.min.js"></script>
+	<script src="/static/bootstrap/bootstrap-select.min.js"></script>
+    
+    <link rel="stylesheet" href="/static/umsteigen/styles.css?202203131435">
+
+	<!-- Matomo -->
+	<script type="text/javascript">
+	  var _paq = window._paq || [];
+	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="https://mystat.uber.space/";
+	    _paq.push(['setTrackerUrl', u+'matomo.php']);
+	    _paq.push(['setSiteId', '8']);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<!-- End Matomo Code -->
+
+</head>
+	
+<body>
+<noscript><img src="https://mystat.uber.space/matomo.php?idsite=8&rec=1" style="border:0;" alt="" /></noscript>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+    <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+    <span class="sr-only">Navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    </button>
+    <a href="{% url 'index' %}" class="pull-left" style="margin: 5px"><img alt="" src="/static/umsteigen/umsteigen.png" height="40"></a>
+    <a class="navbar-brand" href="{% url 'index' %}">Umsteigen</a><img src="/static/umsteigen/beta.png" alt="beta" height="50">
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+    <li><a href="{% url 'line_list' %}">Linien</a></li>
+    <li><a href="{% url 'station_list' %}">Stationen</a></li>
+    <li><a href="{% url 'contact' %}">Kontakt</a></li>
+    </ul>
+    </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+
+<div class="container">
+
+<div class="page-header">
+	<h1>{% block titleh1 %}Umsteigen in Berlin{% endblock titleh1 %}</h1>
+</div>
+
+{% if station_list %}
+<p>
+<select class="selectpicker" data-live-search="true" title="Umsteigebahnhof" onchange="location = this.options[this.selectedIndex].value;">
+<option></option>
+{% for station in station_list %}
+    <option value='{% url 'station_detail_name' station.url_name %}'>{{ station }}</option>
+{% endfor %}
+</select>
+</p>
+{% endif %}
+
+<p>
+{% block content %} no content available {% endblock content %}
+</p>
+
+
+
+
+
+
+<br>
+</div> <!--/container -->
+
+
+<footer class="footer">
+  <div class="container">
+      Copyright &copy; 2017-2025 <a href="{% url 'contact' %}">Paul F&uuml;hring</a> 
+  </div>
+</footer>
+
+</body>
+</html>
+
+
+<style type="text/css">
+<!--
+/* Sticky footer styles, needs to stay in the main html at the end of the page!
+----------------------------------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px;
+  /* padding top for fixed navbar */
+  padding-top: 20px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+}
+
+-->
+</style>
+
+

@@ -1,0 +1,26 @@
+{% extends "umsteigen/base.html" %}
+
+{% block metarobots %}noindex{% endblock %}
+{% block title %}Neue Information eingeben für Umsteigen bei {{ station }} bei der Berliner BVG{% endblock %}
+{% block titleh1 %}Umsteigen {{ station }}{% endblock %}
+{% block metadescription %}In welchen Waggon muss ich bei der Berliner BVG einsteigen um bei {{ station.name }} am besten umzusteigen?!{% endblock %}
+
+{% block content %}
+
+In welchen Waggon muss ich bei der BVG Berlin einsteigen um bei {{ station.name }}
+<nobr>
+{% for line in station.lines.all %}<a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span></a>{% endfor %}
+</nobr>
+am besten umzusteigen?!
+
+<p>
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form }}
+    </table>
+    <input type="submit" value="Make it so!">
+    <a class="btn" href="{% url 'station_detail_name' station.url_name %}">Abbrechen und zurück</a>
+</form>
+</p>
+{% endblock content %}
