@@ -1,21 +1,21 @@
 {% extends "umsteigen/base.html" %}
 
-{% block title %}Umsteigen bei der Berliner BVG -- Liste der Linien{% endblock %}
-{% block titleh1 %}Liste der Linien{% endblock %}
+{% block title %}Transfer with Copenhagen's public transit -- List of Lines{% endblock %}
+{% block titleh1 %}List of Lines{% endblock %}
 
 {% block content %}
 
-In welchen Waggon muss ich bei der BVG Berlin einsteigen um am besten umzusteigen?! Bitte eine Linie auswählen:
+Which carriage should I board on Copenhagen's public transit to transfer best? Please select a line:
 
     <ul class="list-group">
     {% for line in line_list %}
         <li class="list-group-item"><a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span>{{ line.start.name }}
-	{% if line.end is not None %}
-	    &harr; {{ line.end.name }}
-	{% endif %}
+        {% if line.end is not None %}
+            &harr; {{ line.end.name }}
+        {% endif %}
         </a></li>
     {% empty %}
-        <li class="list-group-item">Keine Linien vorhanden.</li>
+        <li class="list-group-item">No lines available.</li>
     {% endfor %}
     </ul>
 

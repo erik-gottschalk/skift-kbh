@@ -1,19 +1,19 @@
 {% extends "umsteigen/base.html" %}
 
-{% block title %}Umsteigen bei {{ station }} bei der Berliner BVG{% endblock %}
-{% block titleh1 %}Umsteigen {{ station }}{% endblock %}
-{% block metadescription %}In welchen Waggon muss ich bei der Berliner BVG einsteigen um bei {{ station.name }} am besten umzusteigen?!{% endblock %}
+{% block title %}Transfer at {{ station }} with Copenhagen's public transit{% endblock %}
+{% block titleh1 %}Transfer {{ station }}{% endblock %}
+{% block metadescription %}Which carriage should I board on Copenhagen's public transit to transfer best at {{ station.name }}?{% endblock %}
 
 {% block content %}
 <br>
 {% if station.bvg_details %}
-<a class="btn btn-default" href="{{ station.bvg_details }}" target="_blank" role="button">Details zu {{ station.name }} bei der BVG <img src="/static/umsteigen/extlink.png" alt="externer Link" border="0"></a>
+<a class="btn btn-default" href="{{ station.bvg_details }}" target="_blank" role="button">Details for {{ station.name }}<img src="/static/umsteigen/extlink.png" alt="external link" border="0"></a>
 {% endif %}
 {% if station.db_station_name %}
-<a class="btn btn-default" href="https://www.bahnhof.de/{{ station.db_station_name }}/abfahrt" target="_blank" role="button">Aktuelle Abfahrten bei {{ station.name }} bei der DB <img src="/static/umsteigen/extlink.png" alt="externer Link" border="0"></a>
+<a class="btn btn-default" href="https://www.bahnhof.de/{{ station.db_station_name }}/abfahrt" target="_blank" role="button">Current departures for {{ station.name }} at DB <img src="/static/umsteigen/extlink.png" alt="external link" border="0"></a>
 {% endif %}
 {% if station.schema_pic %}
-<a class="btn btn-default" href="{{ station.schema_pic }}" target="_blank" role="button">Schematische Darstellung* von {{ station.name }} <img src="/static/umsteigen/extlink.png" alt="externer Link" border="0"></a>
+<a class="btn btn-default" href="{{ station.schema_pic }}" target="_blank" role="button">Schematic diagram* of {{ station.name }} <img src="/static/umsteigen/extlink.png" alt="external link" border="0"></a>
 {% endif %}
 {% if station.bvg_pic %}
 <!--
@@ -24,7 +24,7 @@
 
 {% if thanks and thanks != 'adm' %}
 <div class="alert alert-success">
-     Danke für Deinen Hinweis!
+	Thank you for your feedback!
 </div>
 {% endif %}
 
@@ -40,21 +40,22 @@
 <script>
 // initialize the map on the "map" div with a given center and zoom
 var map = new L.Map('map', {
-  center: new L.LatLng(51.46, -0.205),
-  zoom: 15
+	center: new L.LatLng(51.46, -0.205),
+	zoom: 15
 });
 var tileUrl = "https://tile.thunderforest.com/static/transport/{{ station.lon }},{{ station.lat }},16/200x150@2x.png?apikey=99ba2838a14043cb8cec4b20a8c809f3", layer = new L.TileLayer(tileUrl, {maxZoom: 18});
 map.addLayer(layer);
 </script>
 {% endif %}
 
+
 {% if station.change_station %}
 <p>
-In welchen Waggon muss ich bei der BVG Berlin einsteigen um bei {{ station.name }}
+Which carriage should I board on Copenhagen's public transit to transfer best at {{ station.name }}
 <nobr>
 {% for line in station.lines.all %}<a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span></a>{% endfor %}
 </nobr>
-am besten umzusteigen?!
+?
 </p>
 
 
@@ -62,14 +63,14 @@ am besten umzusteigen?!
 <ul class="list-group">
     {% for change in change_list %}
 	<li class="list-group-item">
-	Ich fahre 
+	I am traveling 
 	{% for direction in change.from_direction.all %}
 	<!--<nobr><a href="{% url 'line_detail' direction.line.id %}"><span class="{{ direction.line.css }}">{{ direction.line.name }}</span>{{ direction.name }}</a>{% if not forloop.last %}, {% endif %}</nobr>-->
-	<nobr><span class="{{ direction.line.css }}">{{ direction.line.name }}</span>{% if direction.name != '(alle Richtungen)' %}nach {{ direction.name }}{% endif %}{% if not forloop.last %}, {% endif %}</nobr>
+	<nobr><span class="{{ direction.line.css }}">{{ direction.line.name }}</span>{% if direction.name != '(alle Richtungen)' %} to {{ direction.name }}{% endif %}{% if not forloop.last %}, {% endif %}</nobr>
 	{% endfor %}
-	und will bei {{ station.name }}  umsteigen nach
+	and want to transfer at {{ station.name }} to
 	{% for direction in change.to_direction.all %}
-	<nobr><span class="{{ direction.line.css }}">{{ direction.line.name }}</span>{% if direction.name != '(alle Richtungen)' %}nach {{ direction.name }}{% endif %}{% if not forloop.last %}, {% endif %}</nobr>
+	<nobr><span class="{{ direction.line.css }}">{{ direction.line.name }}</span>{% if direction.name != '(alle Richtungen)' %} to {{ direction.name }}{% endif %}{% if not forloop.last %}, {% endif %}</nobr>
 	<!--<nobr><a href="{% url 'line_detail' direction.line.id %}"><span class="{{ direction.line.css }}">{{ direction.line.name }}</span>{{ direction.name }}</a>{% if not forloop.last %}, {% endif %}</nobr>-->
 	{% endfor %}
 	<br>
@@ -81,14 +82,14 @@ am besten umzusteigen?!
     {% endfor %}
 </ul>
 <p>
-Zuletzt aktualisiert: {{ station.last_modified|date:'Y-m-d, H:i' }}
+Last updated: {{ station.last_modified|date:'Y-m-d, H:i' }}
 </p>
 {% else %}
-<div class="alert alert-info" role="alert">Keine Daten vorhanden.</div>
+<div class="alert alert-info" role="alert">No data available.</div>
 {% endif %}
 
 {% if thanks_list %} 
-    <p>&#x1f44f; Dank an 
+    <p>&#x1f44f; Thanks to 
         {% for thankyou in thanks_list %}
             {{ thankyou.name }}
             {% if not forloop.last %} &amp; {% endif %}
@@ -98,24 +99,24 @@ Zuletzt aktualisiert: {{ station.last_modified|date:'Y-m-d, H:i' }}
 
 {% if station.complete %} 
 <p>
-Diese Station ist fertiggestellt. Wenn Du einen Fehler gefunden hast, <a href="{% url 'contact' %}">bitte melden</a>.
+This station is complete. If you found an error, <a href="{% url 'contact' %}">please report it</a>.
 </p>
 {% else %}
 <p>
-<a class="btn btn-default" href="{% url 'station_add_change' station.id %}" role="button">Neue Umsteige-Informationen eingeben</a>
+<a class="btn btn-default" href="{% url 'station_add_change' station.id %}" role="button">Enter new transfer information</a>
 </p>
 {% endif %}
 
 {% if station.schema_pic %}
-<p>* Schematische Darstellung von <a href="http://stations.albertguillaumes.cat/" target="_blank">Albert Guillaumes Marcer <img src="/static/umsteigen/extlink.png" alt="externer Link" border="0"></a></p>
+<p>* Schematic diagram by <a href="http://stations.albertguillaumes.cat/" target="_blank">Albert Guillaumes Marcer <img src="/static/umsteigen/extlink.png" alt="external link" border="0"></a></p>
 {% endif %}
 
 {% else %}
-<p>An der Station {{ station.name }} 
+<p>At station {{ station.name }} 
 <nobr>
 {% for line in station.lines.all %}<a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span></a>{% endfor %}
 </nobr>
-ist kein Umsteigen möglich.</p>
+no transfer is possible.</p>
 {% endif %}
 
 {% if thanks == 'adm' %}

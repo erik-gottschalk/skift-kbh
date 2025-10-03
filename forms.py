@@ -12,12 +12,12 @@ class AddChange(forms.ModelForm):
         fields = ('__all__')
         labels = { 
             'at': 'Station',
-            'from_direction': 'Fahrtrichtung',
-            'to_direction': 'Umsteigen nach',
-            'waggon': 'So einsteigen',
-            'name': 'Dank an (optional)',
-            'email': 'E-Mail (optional, für Rückfragen)',
-            'comment': 'Kommentar (optional)',
+            'from_direction': 'Direction of travel',
+            'to_direction': 'Transfer to',
+            'waggon': 'Boarding position',
+            'name': 'Thanks to (optional)',
+            'email': 'Email (optional, for inquiries)',
+            'comment': 'Comment (optional)',
             }
         widgets = {
             'at': forms.HiddenInput(),

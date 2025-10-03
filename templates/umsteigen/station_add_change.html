@@ -1,17 +1,17 @@
 {% extends "umsteigen/base.html" %}
 
 {% block metarobots %}noindex{% endblock %}
-{% block title %}Neue Information eingeben für Umsteigen bei {{ station }} bei der Berliner BVG{% endblock %}
-{% block titleh1 %}Umsteigen {{ station }}{% endblock %}
-{% block metadescription %}In welchen Waggon muss ich bei der Berliner BVG einsteigen um bei {{ station.name }} am besten umzusteigen?!{% endblock %}
+{% block title %}Enter new information for transfers at {{ station }} with Copenhagen's public transit{% endblock %}
+{% block titleh1 %}Transfer {{ station }}{% endblock %}
+{% block metadescription %}Which carriage should I board on Copenhagen's public transit to transfer best at {{ station.name }}?{% endblock %}
 
 {% block content %}
 
-In welchen Waggon muss ich bei der BVG Berlin einsteigen um bei {{ station.name }}
+Which carriage should I board on Copenhagen's public transit to transfer best at {{ station.name }}
 <nobr>
 {% for line in station.lines.all %}<a href="{% url 'line_detail' line.id %}"><span class="{{ line.css }}">{{ line.name }}</span></a>{% endfor %}
 </nobr>
-am besten umzusteigen?!
+?
 
 <p>
 <form action="" method="post">
@@ -20,7 +20,7 @@ am besten umzusteigen?!
     {{ form }}
     </table>
     <input type="submit" value="Make it so!">
-    <a class="btn" href="{% url 'station_detail_name' station.url_name %}">Abbrechen und zurück</a>
+    <a class="btn" href="{% url 'station_detail_name' station.url_name %}">Cancel and go back</a>
 </form>
 </p>
 {% endblock content %}

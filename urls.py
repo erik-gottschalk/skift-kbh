@@ -4,8 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('contact', views.contact, name='contact'),
-    path('contact/', views.contact, name='contact'),
+    # path('contact', views.contact, name='contact'),
+    # path('contact/', views.contact, name='contact'),
     path('stats', views.stats, name='stats'),
     path('privacy', views.privacy, name='privacy'),
     path('line/<int:id>/', views.line_detail, name='line_detail'),
