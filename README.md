@@ -20,14 +20,14 @@ This repository only contains the `skift-kbh` Django app. You must create a Djan
    django-admin startproject skift-kbh-project
    cd skift-kbh-project
    ```
-2. **Clone this GitHub repository inside your Django project directory:**
-3. **Add `'skift-kbh'` to `INSTALLED_APPS` in your `settings.py`.**
+2. **Clone this GitHub repository inside your Django project directory as `UmsteigenApp`:**
+3. **Add `'UmsteigenApp'` to `INSTALLED_APPS` in your `settings.py`.**
 4. **Include the app's URLs in your main `urls.py`:**
    ```python
    from django.urls import path, include
    urlpatterns = [
        # ...
-       path('', include('skift-kbh.urls')),
+       path('', include('UmsteigenApp.urls')),
    ]
    ```
 5. **Create a `static/` folder and add required static files (Bootstrap, CSS, etc.) as needed.**
